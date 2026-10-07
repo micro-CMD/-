@@ -1,0 +1,43 @@
+{% extends 'learning_logs/base.html' %}
+
+{% block content %}
+
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h1>{{ topic.text }}</h1>
+    <a class="btn btn-primary" href="{% url 'learning_logs:new_entry' topic.id %}">
+      添加新条目
+    </a>
+  </div>
+
+  <p class="text-muted small">
+    创建于 {{ topic.date_added|date:'Y-m-d H:i' }}
+  </p>
+
+  {% if entries %}
+    <ul class="list-group mb-4">
+      {% for entry in entries %}
+        <li class="list-group-item">
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <span class="text-muted small">
+              {{ entry.date_added|date:'Y-m-d H:i' }}
+            </span>
+            <a class="btn btn-outline-secondary btn-sm"
+               href="{% url 'learning_logs:edit_entry' entry.id %}">
+              编辑
+            </a>
+          </div>
+          <div>{{ entry.text|linebreaks }}</div>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <div class="alert alert-info">
+      这个主题下还没有条目。点击右上角“添加新条目”开始记录吧。
+    </div>
+  {% endif %}
+
+  <a href="{% url 'learning_logs:topics' %}" class="btn btn-link">
+    ← 返回主题列表
+  </a>
+
+{% endblock content %}

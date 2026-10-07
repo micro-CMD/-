@@ -1,0 +1,31 @@
+{% extends 'learning_logs/base.html' %}
+
+{% block content %}
+
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h1>主题</h1>
+    <a class="btn btn-primary" href="{% url 'learning_logs:new_topic' %}">
+      添加新主题
+    </a>
+  </div>
+
+  {% if topics %}
+    <ul class="list-group">
+      {% for topic in topics %}
+        <li class="list-group-item">
+          <a href="{% url 'learning_logs:topic' topic.id %}" class="text-decoration-none">
+            {{ topic.text }}
+          </a>
+          <span class="text-muted small ms-2">
+            创建于 {{ topic.date_added|date:'Y-m-d H:i' }}
+          </span>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <div class="alert alert-info">
+      还没有任何主题。点击右上角“添加新主题”开始记录吧。
+    </div>
+  {% endif %}
+
+{% endblock content %}
